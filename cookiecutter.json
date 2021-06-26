@@ -1,7 +1,7 @@
 {
     "project_name": "newproject",
     "developer_name": "Your Name",
-    "developer_email": "Your Email",
+    "developer_email": "user@example.com",
     "github_username": "your_username",
     "license": "MIT"
 }
