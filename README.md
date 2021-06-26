@@ -9,9 +9,9 @@ cookiecutter https://github.com/epikulski/pycookiecutter
 
 ## Features:
 * Provision virtual environment with `venv`.
-* Configures local dev install of the library under development in editable mode.
+* Configures a local dev install of the library under development in editable mode.
 * Support for absolute imports throughout the project, including the test suite. 
-* Adds a console script for library's default entrypoint.
+* Adds a console script for the library's default entrypoint.
 * Includes a Makefile with run configurations for linting, testing, building, and publishing to PyPI (or Artifactory). 
 
 ## Notes
