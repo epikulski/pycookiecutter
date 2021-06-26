@@ -26,7 +26,7 @@ format:
 	$(VENV_PYTHON) -m black $(PROJECT_NAME)
 
 test-unit:
-	 $(VENV_PYTHON) -m pytest --junitxml=build/reports/unit.xml -o junit_family=xunit2 tests/unit;\
+	$(VENV_PYTHON) -m pytest --junitxml=build/reports/unit.xml -o junit_family=xunit2 tests/unit
 
 test-int:
 	$(VENV_PYTHON) -m pytest --junitxml=build/reports/int.xml -o junit_family=xunit2 tests/int
