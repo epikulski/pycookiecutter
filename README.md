@@ -1,6 +1,12 @@
 # PyCookieCutter
 A CookieCutter template to help start new Python projects the right way. 
 
+## Usage
+```shell
+python3 -m pip install cookiecutter
+cookiecutter https://github.com/epikulski/pycookiecutter
+```
+
 ## Features:
 * Provision virtual environment with `venv`.
 * Configures local dev install of the library under development in editable mode.
