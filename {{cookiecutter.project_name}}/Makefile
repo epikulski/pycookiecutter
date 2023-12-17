@@ -11,7 +11,8 @@ VENV_PYTHON = $(VENV_PATH)/bin/python3
 all: env format lint test build
 
 env:
-	python3 -m venv $(VENV_PATH)
+	pyenv install --skip-existing
+	pyenv exec python3 -m venv $(VENV_PATH)
 	$(VENV_PYTHON) -m pip install --upgrade pip
 	$(VENV_PYTHON) -m pip install --upgrade setuptools wheel twine -r requirements.txt -r requirements.dev.txt -e .
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
