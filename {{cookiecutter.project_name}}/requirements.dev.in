@@ -1,0 +1,10 @@
+# requirements.dev.in
+-c requirements.txt
+pytest
+mypy
+bandit
+pylint
+black
+flake8
+wheel
+twine

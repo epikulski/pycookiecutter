@@ -13,8 +13,11 @@ all: env format lint test build
 env:
 	pyenv install --skip-existing
 	pyenv exec python3 -m venv $(VENV_PATH)
-	$(VENV_PYTHON) -m pip install --upgrade pip
-	$(VENV_PYTHON) -m pip install --upgrade setuptools wheel twine -r requirements.txt -r requirements.dev.txt -e .
+	$(VENV_PYTHON) -m pip install --upgrade pip pip-tools setuptools # Install "fundamental" dependencies
+	$(VENV_PATH)/bin/pip-compile --output-file requirements.txt requirements.in  # Build 'prod' dependencies.
+	$(VENV_PATH)/bin/pip-compile --output-file requirements.dev.txt requirements.dev.in  # Build 'dev' dependencies.
+	$(VENV_PATH)/bin/pip-sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
+	$(VENV_PYTHON) -m pip install -e .
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:

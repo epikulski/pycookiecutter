@@ -21,10 +21,19 @@ cookiecutter https://github.com/epikulski/pycookiecutter
 ## Features:
 * Python version management with [pyenv](https://github.com/pyenv/pyenv).
 * Provision virtual environment with [venv](https://docs.python.org/3/library/venv.html).
+* Manage and pin dependencies with [pip-tools](https://github.com/jazzband/pip-tools).
 * Configures a local dev install of the library under development in editable mode.
 * Support for absolute imports throughout the project, including the test suite. 
 * Adds a console script for the library's default entrypoint.
 * Includes a Makefile with run configurations for linting, testing, building, and publishing to PyPI (or Artifactory). 
+
+## Managing Python Dependencies
+Templated projects contain two files for tracking python dependencies: `requirements.in` and `requirements.dev.in`.
+These are used by [pip-compile](https://github.com/jazzband/pip-tools) to generate `requirements.txt` and 
+`requirements.dev.txt`, which should not be edited directly.
+
+The `dev` suffix corresponds to dependencies that are only relevant for local development. The development requirements
+file is constrained by the production requirements file, to avoid impossible combinations of packages.
 
 ## Notes
 This package is a template based on my personal preference for setting up local dev environments for Python library
