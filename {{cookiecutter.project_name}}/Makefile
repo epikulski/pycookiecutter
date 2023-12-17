@@ -21,13 +21,11 @@ env:
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:
-	$(VENV_PYTHON) -m flake8 --max-line-length=100 $(PROJECT_NAME)
-	$(VENV_PYTHON) -m pylint $(PROJECT_NAME)
+	$(VENV_PYTHON) -m ruff check $(PROJECT_NAME)
 	$(VENV_PYTHON) -m mypy $(PROJECT_NAME)
-	$(VENV_PYTHON) -m bandit -r $(PROJECT_NAME)
 
 format:
-	$(VENV_PYTHON) -m black $(PROJECT_NAME)
+	$(VENV_PYTHON) -m ruff $(PROJECT_NAME)
 
 test-unit:
 	$(VENV_PYTHON) -m pytest --junitxml=build/reports/unit.xml -o junit_family=xunit2 tests/unit
