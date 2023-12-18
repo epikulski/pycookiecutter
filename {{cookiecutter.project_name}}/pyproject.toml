@@ -10,7 +10,7 @@ authors = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest", "mypy", "ruff", "wheel", "twine"]
+dev = ["pytest", "mypy", "ruff", "wheel", "twine", "pre-commit"]
 
 [project.scripts]
 {{ cookiecutter.project_name }} = "{{ cookiecutter.project_name }}.main:entrypoint"

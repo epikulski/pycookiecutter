@@ -18,6 +18,7 @@ env:
 	$(VENV_PYTHON) -m piptools compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
 	$(VENV_PYTHON) -m piptools sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
 	$(VENV_PYTHON) -m pip install --editable .  # Install package under development.
+	$(VENV_PATH)/bin/pre-commit install
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:
