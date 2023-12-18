@@ -25,7 +25,7 @@ lint:
 	$(VENV_PYTHON) -m mypy $(PROJECT_NAME)
 
 format:
-	$(VENV_PYTHON) -m ruff $(PROJECT_NAME)
+	$(VENV_PYTHON) -m ruff format $(PROJECT_NAME)
 
 test-unit:
 	$(VENV_PYTHON) -m pytest --junitxml=build/reports/unit.xml -o junit_family=xunit2 tests/unit
