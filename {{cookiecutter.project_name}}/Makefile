@@ -14,10 +14,10 @@ env:
 	pyenv install --skip-existing
 	pyenv exec python3 -m venv $(VENV_PATH)
 	$(VENV_PYTHON) -m pip install --upgrade pip pip-tools setuptools # Install "fundamental" dependencies
-	$(VENV_PYTHON) -m piptools compile --output-file requirements.txt requirements.in  # Build 'prod' dependencies.
-	$(VENV_PYTHON) -m piptools compile --output-file requirements.dev.txt requirements.dev.in  # Build 'dev' dependencies.
+	$(VENV_PYTHON) -m piptools compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
+	$(VENV_PYTHON) -m piptools compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
 	$(VENV_PYTHON) -m piptools sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
-	$(VENV_PYTHON) -m pip install -e .
+	$(VENV_PYTHON) -m pip install --editable .  # Install package under development.
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:
@@ -39,7 +39,7 @@ test-all:
 test: test-all
 
 build:
-	$(VENV_PYTHON) setup.py sdist bdist_wheel
+	$(VENV_PYTHON) -m build --sdist .
 
 publish: env build
 	$(VENV_PYTHON) -m twine upload --skip-existing --repository local dist/*

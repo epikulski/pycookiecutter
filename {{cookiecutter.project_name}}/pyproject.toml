@@ -1,0 +1,19 @@
+[project]
+name = "{{ cookiecutter.project_name }}"
+readme = "README.md"
+license = {file = "LICENSE"}
+dynamic = ["version"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest", "mypy", "ruff", "wheel", "twine"]
+
+[project.scripts]
+{{ cookiecutter.project_name }} = "{{ cookiecutter.project_name }}.main:entrypoint"
+
+[build-system]
+requires = ["setuptools >= 69.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "{{ cookiecutter.project_name }}.__version__"}
