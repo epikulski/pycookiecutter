@@ -1,9 +1,13 @@
 [project]
 name = "{{ cookiecutter.project_name }}"
+description = "{{ cookiecutter.project_name }}"
 readme = "README.md"
 license = {file = "LICENSE"}
 dynamic = ["version"]
 dependencies = []
+authors = [
+    {name = "{{ cookiecutter.developer_name }}", email = "{{ cookiecutter.developer_email }}"}
+]
 
 [project.optional-dependencies]
 dev = ["pytest", "mypy", "ruff", "wheel", "twine"]
