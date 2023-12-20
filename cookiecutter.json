@@ -3,5 +3,6 @@
     "developer_name": "Your Name",
     "developer_email": "user@example.com",
     "github_username": "your_username",
-    "license": "MIT"
+    "license": "MIT",
+    "python_version": "3.12.1"
 }

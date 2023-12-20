@@ -11,19 +11,22 @@ VENV_PYTHON = $(VENV_PATH)/bin/python3
 all: env format lint test build
 
 env:
-	python3 -m venv $(VENV_PATH)
-	$(VENV_PYTHON) -m pip install --upgrade pip
-	$(VENV_PYTHON) -m pip install --upgrade setuptools wheel twine -r requirements.txt -r requirements.dev.txt -e .
+	pyenv install --skip-existing
+	pyenv exec python3 -m venv $(VENV_PATH)
+	$(VENV_PYTHON) -m pip install --upgrade pip pip-tools setuptools # Install "fundamental" dependencies
+	$(VENV_PYTHON) -m piptools compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
+	$(VENV_PYTHON) -m piptools compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
+	$(VENV_PYTHON) -m piptools sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
+	$(VENV_PYTHON) -m pip install --editable .  # Install package under development.
+	$(VENV_PATH)/bin/pre-commit install
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:
-	$(VENV_PYTHON) -m flake8 --max-line-length=100 $(PROJECT_NAME)
-	$(VENV_PYTHON) -m pylint $(PROJECT_NAME)
+	$(VENV_PYTHON) -m ruff check $(PROJECT_NAME)
 	$(VENV_PYTHON) -m mypy $(PROJECT_NAME)
-	$(VENV_PYTHON) -m bandit -r $(PROJECT_NAME)
 
 format:
-	$(VENV_PYTHON) -m black $(PROJECT_NAME)
+	$(VENV_PYTHON) -m ruff format $(PROJECT_NAME)
 
 test-unit:
 	$(VENV_PYTHON) -m pytest --junitxml=build/reports/unit.xml -o junit_family=xunit2 tests/unit
@@ -37,7 +40,7 @@ test-all:
 test: test-all
 
 build:
-	$(VENV_PYTHON) setup.py sdist bdist_wheel
+	$(VENV_PYTHON) -m build --sdist .
 
 publish: env build
 	$(VENV_PYTHON) -m twine upload --skip-existing --repository local dist/*
