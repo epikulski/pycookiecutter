@@ -22,7 +22,7 @@ env:
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:
-	$(VENV_PYTHON) -m ruff check $(PROJECT_NAME)
+	$(VENV_PYTHON) -m ruff check --fix $(PROJECT_NAME)
 	$(VENV_PYTHON) -m mypy $(PROJECT_NAME)
 
 format:
