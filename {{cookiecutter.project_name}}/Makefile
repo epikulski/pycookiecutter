@@ -13,10 +13,10 @@ all: env format lint test build
 env:
 	pyenv install --skip-existing
 	pyenv exec python3 -m venv $(VENV_PATH)
-	$(VENV_PYTHON) -m pip install --upgrade pip pip-tools setuptools # Install "fundamental" dependencies
-	$(VENV_PYTHON) -m piptools compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
-	$(VENV_PYTHON) -m piptools compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
-	$(VENV_PYTHON) -m piptools sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
+	$(VENV_PYTHON) -m pip install --upgrade pip uv setuptools # Install "fundamental" dependencies
+	$(VENV_PYTHON) -m uv pip compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
+	$(VENV_PYTHON) -m uv pip compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
+	$(VENV_PYTHON) -m uv pip sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
 	$(VENV_PYTHON) -m pip install --editable .  # Install package under development.
 	$(VENV_PATH)/bin/pre-commit install
 	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
