@@ -6,20 +6,22 @@ SHELL := /bin/bash
 PROJECT_NAME = {{ cookiecutter.project_name }}
 VENV_PATH = .venv
 VENV_PYTHON = $(VENV_PATH)/bin/python3
-
+PYTHON_VERSION = {{ cookiecutter.python_version }}
 
 all: env format lint test build
 
 env:
-	pyenv install --skip-existing
-	pyenv exec python3 -m venv $(VENV_PATH)
-	$(VENV_PYTHON) -m pip install --upgrade pip uv setuptools # Install "fundamental" dependencies
-	$(VENV_PYTHON) -m uv pip compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
-	$(VENV_PYTHON) -m uv pip compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
-	$(VENV_PYTHON) -m uv pip sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
-	$(VENV_PYTHON) -m pip install --editable .  # Install package under development.
+	git init
+	HOMEBREW_NO_AUTO_UPDATE=1 brew install pipx
+	pipx install uv
+	uv python pin $(PYTHON_VERSION)
+	uv python install $(PYTHON_VERSION)
+	uv venv $(VENV_PATH)
+	uv pip compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
+	uv pip compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
+	uv pip sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
+	pip install --editable .  # Install package under development.
 	$(VENV_PATH)/bin/pre-commit install
-	$(VENV_PYTHON) -m pip show $(PROJECT_NAME)
 
 lint:
 	$(VENV_PYTHON) -m ruff check --fix $(PROJECT_NAME)
@@ -40,10 +42,10 @@ test-all:
 test: test-all
 
 build:
-	$(VENV_PYTHON) -m build --sdist .
+	uvx --from build pyproject-build --installer uv
 
 publish: env build
-	$(VENV_PYTHON) -m twine upload --skip-existing --repository local dist/*
+	uvx twine upload --skip-existing --repository local dist/*
 
 clean:
 	rm -rf $(VENV_PATH)
