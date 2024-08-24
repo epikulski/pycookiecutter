@@ -41,6 +41,9 @@ test-all:
 
 test: test-all
 
+docs: env
+	$(VENV_PATH)/bin/sphinx-build ./docs docs/_build
+
 build:
 	uvx --from build pyproject-build --installer uv
 
