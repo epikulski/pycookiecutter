@@ -12,5 +12,8 @@ jobs:
     - name: Set up Python 3.12
       uses: actions/setup-python@v3
 
+    - name: Set up CookieCutter
+      run: pip install cookiecutter
+
     - name: Make and test template
       run: python3 -m unittest test.py
