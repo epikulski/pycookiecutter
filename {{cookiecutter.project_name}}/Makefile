@@ -12,8 +12,7 @@ all: env format lint test build docs
 
 env:
 	git init
-	HOMEBREW_NO_AUTO_UPDATE=1 brew install pipx
-	pipx install uv
+	command -v pipx >/dev/null 2>&1 || HOMEBREW_NO_AUTO_UPDATE=1 brew install pipx	pipx install uv # Only install pipx if not already installed.
 	uv python pin $(PYTHON_VERSION)
 	uv python install $(PYTHON_VERSION)
 	uv venv $(VENV_PATH)
