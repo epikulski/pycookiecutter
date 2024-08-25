@@ -42,7 +42,12 @@ test-all:
 test: test-all
 
 docs:
-	$(VENV_PATH)/bin/sphinx-build ./docs docs/_build
+	# Build docs, fail build on warnings.
+	$(VENV_PATH)/bin/sphinx-build \
+		-W \
+		--keep-going \
+		./docs \
+		docs/_build
 
 build:
 	uvx --from build pyproject-build --installer uv
