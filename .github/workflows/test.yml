@@ -1,0 +1,19 @@
+name: PyCookieCutter CI
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v3
+
+    - name: Make and test template
+      run: python3 -m unittest test.py
