@@ -44,6 +44,7 @@ test: test-all
 docs:
 	# Build docs, fail build on warnings.
 	$(VENV_PATH)/bin/sphinx-build \
+		-b doctest \
 		-W \
 		--keep-going \
 		./docs \

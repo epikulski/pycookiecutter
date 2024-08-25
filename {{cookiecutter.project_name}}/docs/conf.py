@@ -16,6 +16,7 @@ author = '{{ cookiecutter.developer_name }}'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    'sphinx.ext.doctest'
 ]
 
 templates_path = ['_templates']
