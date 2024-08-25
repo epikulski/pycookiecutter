@@ -1,0 +1,19 @@
+name: PyCookieCutter CI
+
+on: [push]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v3
+
+    - name: Set up CookieCutter
+      run: pipx install cookiecutter
+
+    - name: Make and test template
+      run: python3 -m unittest test.py
