@@ -1,5 +1,5 @@
 #!make
-.PHONY: env lint test build publish clean
+.PHONY: env lint test build docs publish clean
 SHELL := /bin/bash
 
 # Globals
@@ -8,7 +8,7 @@ VENV_PATH = .venv
 VENV_PYTHON = $(VENV_PATH)/bin/python3
 PYTHON_VERSION = {{ cookiecutter.python_version }}
 
-all: env format lint test build
+all: env format lint test build docs
 
 env:
 	git init
@@ -20,7 +20,7 @@ env:
 	uv pip compile --output-file requirements.txt pyproject.toml  # Build 'prod' dependencies.
 	uv pip compile --output-file requirements.dev.txt --extra dev pyproject.toml  # Build 'dev' dependencies.
 	uv pip sync requirements.txt requirements.dev.txt  # Install all (including dev) requirements to venv.
-	pip install --editable .  # Install package under development.
+	uv pip install --editable .  # Install package under development.
 	$(VENV_PATH)/bin/pre-commit install
 
 lint:
@@ -41,7 +41,7 @@ test-all:
 
 test: test-all
 
-docs: env
+docs:
 	$(VENV_PATH)/bin/sphinx-build ./docs docs/_build
 
 build:
